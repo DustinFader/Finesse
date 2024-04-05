@@ -1,39 +1,48 @@
 "use client"
 
 import React, {useState, useEffect} from "react";
-import { Button } from "@nextui-org/react";
-
-// 
-
-// async function main() {
-//   
-//   console.log (allUsers)
-// }
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableColumn, getKeyValue } from "@nextui-org/react";
 
 export default function Test() {
-  const [users, setUsers] = useState([]);
-  // main()
-  //   .then(async () => {
-  //     await prisma.$disconnect()
-  //   })
-  //   .catch(async (e) => {
-  //     console.error(e)
-  //     await prisma.$disconnect()
-  //     process.exit(1)
-  //   })
+  const [payments, setPayments] = useState([]);
+
   useEffect(() => {
-    fetch('/api')
+    fetch('/api/payments')
       .then(res => res.json())
-      .then(data => setUsers(data.allUsers))
+      .then(data => setPayments(data.allPayments))
   }, [])
+
+  const columns = [
+    {
+      key: "category_id",
+      label: "Category",
+    },
+    {
+      key: "name",
+      label: "Name",
+    },
+    {
+      key: "amount",
+      label: "Amount",
+    },
+  ];
 
   return (
     <div>
       <p>testing testing</p>
-      <Button className="m-5">
-        Button
-      </Button>
-      {users[0] && users[0].email}
+
+      <Table aria-label="Example table with dynamic content">
+        <TableHeader columns={columns}>
+          {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+        </TableHeader>
+        <TableBody items={payments}>
+          {(item) => (
+            <TableRow key={item.payment_id}>
+              {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 };
