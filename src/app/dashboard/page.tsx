@@ -53,7 +53,7 @@ export default function Dashboard() {
           <NavbarItem>Login</NavbarItem>
         </NavbarContent>
       </Navbar>
-      <main>
+      <main className="flex justify-evenly">
         <div>
           <div className="flex justify-evenly">
             <div>Bar</div>
@@ -63,7 +63,7 @@ export default function Dashboard() {
               <b>Expences {"-950"}</b>
             </div>
           </div>
-          <Table aria-label="Example table with dynamic content">
+          <Table>
             <TableHeader>
               {columns.map((column) => (
                 <TableColumn key={column.key}>{column.label}</TableColumn>
