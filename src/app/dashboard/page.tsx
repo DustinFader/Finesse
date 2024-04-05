@@ -3,6 +3,7 @@
 import React from "react";
 import Header from "@/components/Header"
 import FinanceTable from "@/components/FinanceTable"
+import Footer from "@/components/Footer"
 
 export default function Dashboard() {
   return (
@@ -23,7 +24,7 @@ export default function Dashboard() {
           <p>Chart</p>
         </div>
       </main>
-      <footer className="flex justify-center h-20 bg-gray-700">footer</footer>
+      <Footer/>
     </div>
   );
 }
