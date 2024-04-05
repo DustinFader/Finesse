@@ -17,7 +17,7 @@ import {
   NavbarItem, 
   NavbarMenuToggle,
   NavbarMenu,
-  NavbarMenuItem
+  NavbarMenuItem,
 } from "@nextui-org/react";
 
 export default function Dashboard() {
@@ -47,15 +47,20 @@ export default function Dashboard() {
 
   return (
     <div>
-      <Navbar>Finesse</Navbar>
-      <div>
+      <Navbar space-between>
+        <NavbarBrand className="font-bold" >Finesse</NavbarBrand>
+        <NavbarContent justify="end">
+          <NavbarItem>Login</NavbarItem>
+        </NavbarContent>
+      </Navbar>
+      <main>
         <div>
-          <div>
+          <div className="flex justify-evenly">
             <div>Bar</div>
             <div>
-              <b>income</b>
+              <b>Income {"200"}</b>
               <br />
-              <b>Expences</b>
+              <b>Expences {"-950"}</b>
             </div>
           </div>
           <Table aria-label="Example table with dynamic content">
@@ -78,7 +83,7 @@ export default function Dashboard() {
         <div>
           <p>Chart</p>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
