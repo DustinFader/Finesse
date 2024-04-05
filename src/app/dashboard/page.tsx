@@ -28,6 +28,18 @@ export default function Dashboard() {
       payment: "rent",
       amount: -950,
     },
+    {
+      key: "2",
+      category: "rent",
+      payment: "rent",
+      amount: -950,
+    },
+    {
+      key: "3",
+      category: "rent",
+      payment: "rent",
+      amount: -950,
+    },
   ];
 
   const columns = [
@@ -47,7 +59,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Navbar space-between>
+      <Navbar>
         <NavbarBrand className="font-bold" >Finesse</NavbarBrand>
         <NavbarContent justify="end">
           <NavbarItem>Login</NavbarItem>
@@ -58,9 +70,9 @@ export default function Dashboard() {
           <div className="flex justify-evenly">
             <div>Bar</div>
             <div>
-              <b>Income {"200"}</b>
+              <p><b>Income</b> {"200"}  </p>
               <br />
-              <b>Expences {"-950"}</b>
+              <p><b>Expences</b> {"-950"}</p>
             </div>
           </div>
           <Table>
@@ -73,7 +85,7 @@ export default function Dashboard() {
               {rows.map((row) => (
                 <TableRow key={row.key}>
                   {(columnKey) => (
-                    <TableCell>{getKeyValue(row, columnKey)}</TableCell>
+                    <TableCell className="font-white">{getKeyValue(row, columnKey)}</TableCell>
                   )}
                 </TableRow>
               ))}
