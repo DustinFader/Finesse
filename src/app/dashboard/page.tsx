@@ -18,6 +18,7 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
+  Link
 } from "@nextui-org/react";
 
 export default function Dashboard() {
@@ -62,7 +63,8 @@ export default function Dashboard() {
       <Navbar>
         <NavbarBrand className="font-bold" >Finesse</NavbarBrand>
         <NavbarContent justify="end">
-          <NavbarItem>Login</NavbarItem>
+          <NavbarItem><Link color="foreground" href="#">Login</Link></NavbarItem>
+          <NavbarItem><Link color="foreground" href="#">Sign Up</Link></NavbarItem>
         </NavbarContent>
       </Navbar>
       <main className="flex justify-evenly">
