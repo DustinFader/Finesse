@@ -46,7 +46,7 @@ const columns = [
   },
 ];
 
-export default function Expences() {
+export default function FinanceTable() {
   return (
     <Table>
       <TableHeader>

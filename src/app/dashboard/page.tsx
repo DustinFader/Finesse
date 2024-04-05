@@ -2,7 +2,7 @@
 
 import React from "react";
 import Header from "@/components/Header"
-import Expences from "@/components/Expences"
+import FinanceTable from "@/components/FinanceTable"
 
 export default function Dashboard() {
   return (
@@ -17,7 +17,7 @@ export default function Dashboard() {
               <p><b>Expences</b> {"-950"}</p>
             </div>
           </div>
-          <Expences/>
+          <FinanceTable/>
         </div>
         <div>
           <p>Chart</p>
