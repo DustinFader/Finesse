@@ -46,7 +46,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div>
+    <>
       <Navbar space-between>
         <NavbarBrand className="font-bold" >Finesse</NavbarBrand>
         <NavbarContent justify="end">
@@ -84,6 +84,7 @@ export default function Dashboard() {
           <p>Chart</p>
         </div>
       </main>
-    </div>
+      <footer className="flex justify-center">footer</footer>
+    </>
   );
 }
