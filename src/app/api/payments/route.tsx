@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server'
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function GET() {
+export async function GET(request: Request) {
   const allPayments = await prisma.payments.findMany()
-  return Response.json({ message: 'Hello!', allPayments }, { status: 200 })
+  return NextResponse.json({ message: 'Hello!', allPayments }, { status: 200 })
 }
 
 export async function POST(request: Request) {}

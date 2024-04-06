@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useState, useEffect} from "react";
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableColumn, getKeyValue } from "@nextui-org/react";
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableColumn, getKeyValue, Input, Button } from "@nextui-org/react";
 
 export default function Test() {
   const [payments, setPayments] = useState([]);
@@ -30,6 +30,16 @@ export default function Test() {
   return (
     <div>
       <p>testing testing</p>
+
+      <form action="/api/users" method="POST" id="addUser">
+        <Input name="email" type="email" id="email" label="Email" />
+        <Input name="password" type="password" id="password" label="Password" />
+      </form>
+
+      <Button type="submit" form="addUser" value="Submit">
+        Submit
+      </Button>
+
 
       <Table aria-label="Example table with dynamic content">
         <TableHeader columns={columns}>
