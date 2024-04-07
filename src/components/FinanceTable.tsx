@@ -47,21 +47,18 @@ const columns = [
 ];
 
 export default function FinanceTable() {
+  // Quick copy from the 
   return (
-    <Table>
-      <TableHeader>
-        {columns.map((column) => (
-          <TableColumn key={column.key}>{column.label}</TableColumn>
-        ))}
+    <Table aria-label="Table of payments">
+      <TableHeader columns={columns}>
+        {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
       </TableHeader>
-      <TableBody>
-        {rows.map((row) => (
-          <TableRow key={row.key}>
-            {(columnKey) => (
-              <TableCell>{getKeyValue(row, columnKey)}</TableCell>
-            )}
+      <TableBody items={rows}>
+        {(item) => (
+          <TableRow key={item.key}>
+            {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
           </TableRow>
-        ))}
+        )}
       </TableBody>
     </Table>
   );
