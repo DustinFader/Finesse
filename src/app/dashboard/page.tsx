@@ -14,8 +14,8 @@ export default function Dashboard() {
           <div className="flex justify-evenly">
             <div>Bar</div>
             <div>
-              <p><b>Income</b> {"200"}</p>
-              <p><b>Expences</b> {"-950"}</p>
+              <p><b>Income:</b> {"200"}</p>
+              <p><b>Expences:</b> {"-950"}</p>
             </div>
           </div>
           <FinanceTable/>
