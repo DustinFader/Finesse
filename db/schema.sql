@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS categories CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
-  email VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE categories (
   category_id SERIAL PRIMARY KEY NOT NULL, -- Slightly different from ERD, figured it was good to have consistent column names for foreign/primary keys.
-  name VARCHAR(255) NOT NULL
+  name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE payments (
