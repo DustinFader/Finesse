@@ -47,7 +47,6 @@ const columns = [
 ];
 
 export default function FinanceTable() {
-  // Quick copy from the 
   return (
     <Table aria-label="Table of payments">
       <TableHeader columns={columns}>
