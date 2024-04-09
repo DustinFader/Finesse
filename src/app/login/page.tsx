@@ -14,7 +14,7 @@ export default function Login() {
       <Header />
       <main className="flex justify-evenly flex-grow items-center">
         <Image width={500} alt="blah" src="/image/blah.png" />
-        <form className="flex flex-col bg-gray-300 text-2xl p-44 space-y-9">
+        <form className="flex flex-col bg-gray-300 text-2xl p-44 space-y-9 dark:bg-gray-600">
           <h1 className="text-4xl font-semibold">Welcome Back!</h1>
           <Input
             value={inputValue1}
