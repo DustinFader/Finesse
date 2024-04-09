@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Image, Button, Input } from "@nextui-org/react";
 
 export default function Login() {
+  // Temp test useStates
   const [inputValue1, setValue1] = useState("");
   const [inputValue2, setValue2] = useState("");
 
