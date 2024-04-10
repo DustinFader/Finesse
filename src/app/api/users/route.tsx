@@ -4,15 +4,11 @@ const prisma = new PrismaClient();
 
 export async function POST(request: Request) { 
   const body = await request.formData();
-  console.log(body)
 
   await prisma.users.create({
     data: {
-      user_id: 1,
-      category_id: category,
-      name: name,
-      amount: amount,
-      is_additive: additive
+      email: body.get("email"),
+      password: body.get("password"),
     }
   })
 
