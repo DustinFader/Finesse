@@ -10,16 +10,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.formData();
-  let category = await prisma.categories.findFirst({
-    where: {
-      name: body.get("category"),
-    }
-  })
-
   let additive_bool = null;
   let amountInt = parseInt(body.get("amount"));
-  console.log(body)
-  console.log(category)
 
   if (body.get("is_additive")) {
     additive_bool = true;
@@ -27,42 +19,17 @@ export async function POST(request: Request) {
     additive_bool = false;
   }
 
-  //see if category exists
-  if (!category) {
+  const newPayment = await prisma.payments.create({
+    data: {
+      user_id: 7,
+      category_name: body.get("category"),
+      name: body.get("payment_name"),
+      amount: amountInt,
+      is_additive: additive_bool,
+    }
+  })
 
-    //if no category, create it
-    const category = await prisma.categories.create({
-      data: {
-        name: body.get("category"),
-      }
-    })
-
-    // create payment with category id
-    const newPayment = await prisma.payments.create({
-      data: {
-        user_id: 7,
-        category_id: category.category_id,
-        name: body.get("payment_name"),
-        amount: amountInt,
-        is_additive: additive_bool,
-      }
-    })
-
-    category.payment_id = newPayment.payment_id;
-    
-  } else {
-    
-    // create payment with category id
-    await prisma.payments.create({
-      data: {
-        user_id: 7,
-        category_id: category.category_id,
-        name: body.get("payment_name"),
-        amount: amountInt,
-        is_additive: additive_bool,
-      }
-    })
-  }
+  category.payment_id = newPayment.payment_id;
 
   return NextResponse.json({message: "passing", body: body});
 }
