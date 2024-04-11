@@ -34,19 +34,6 @@ export default function FinanceTable() {
       .then((data) => setCategories(data.allCategories));
   }, []);
 
-  // useEffect(() => {
-  //   async function fetchPayments() {
-  //     const payments = await prisma.payments.findMany({
-  //       include: {
-  //         categories_payments_category_idTocategories: true // Include the category details
-  //       }
-  //     });
-  //     setPayments(payments);
-  //   }
-
-  //   fetchPayments();
-  // }, []);
-
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const columns = [
@@ -72,6 +59,26 @@ export default function FinanceTable() {
     return item[key];
   };
 
+  // function handleSubmit(event, onClose) {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const formData = new FormData(form);
+    
+  //   fetch('/api/payments', {
+  //     method: 'POST',
+  //     body: formData,
+  //   })
+  //   .then((res) => res.json())
+  //   .then((data) => setPayments(data.allPayments))
+  //   .then(response => {
+  //     console.log('Form submitted successfully');
+  //     onClose(); // Close the modal after successful submission
+  //   })
+  //   .catch(error => {
+  //     console.error('Error submitting form:', error);
+  //   });
+  // }
+
   return (
     <div>
       <Button onPress={onOpen} color="primary">
@@ -85,7 +92,7 @@ export default function FinanceTable() {
                 New Payment
               </ModalHeader>
               <ModalBody>
-                <form action="/api/payments" method="POST" id="addPayment">
+                <form id="addPayment" method="POST" action={'/api/payments'}>
                   <Input
                     autoFocus
                     label="Category"

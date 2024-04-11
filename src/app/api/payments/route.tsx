@@ -19,9 +19,9 @@ export async function POST(request: Request) {
     additive_bool = false;
   }
 
-  const categoryName = body.get("category_name");
+  const categoryName = body.get("category");
 
-  let category = await prisma.categories.findUnique({
+  let category = await prisma.categories.findFirst({
     where: {
       name: categoryName,
     },
@@ -44,8 +44,6 @@ export async function POST(request: Request) {
       is_additive: additive_bool,
     }
   })
-
-  // category.payment_id = newPayment.payment_id;
 
   return NextResponse.json({message: "passing", body: body});
 }

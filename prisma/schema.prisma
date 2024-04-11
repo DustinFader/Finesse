@@ -9,7 +9,7 @@ datasource db {
 
 model categories {
   category_id                               Int        @id @default(autoincrement())
-  name                                      String     @db.VarChar(255)
+  name                                      String     @db.VarChar(255) @unique
   payment_id                                Int?
   payments_categories_payment_idTopayments  payments?  @relation("categories_payment_idTopayments", fields: [payment_id], references: [payment_id], onDelete: Cascade, onUpdate: NoAction)
   payments_payments_category_idTocategories payments[] @relation("payments_category_idTocategories")
