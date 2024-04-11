@@ -4,26 +4,24 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
   Link,
+  Button,
 } from "@nextui-org/react";
 
 export default function Header() {
   return ( 
-  <Navbar>
-    <NavbarBrand className="font-bold text-2xl">Finesse</NavbarBrand>
+  <Navbar position="static" className="bg-amber-600" maxWidth="full">
+    <NavbarBrand className="justify-start"><Link href="/dashboard" className="font-bold text-3xl text-yellow-100">Finesse</Link></NavbarBrand>
     <NavbarContent justify="end">
       <NavbarItem>
-        <Link color="foreground" href="#">
+        <Button as={Link} href="/login" className="bg-amber-700">
           Login
-        </Link>
+        </Button>
       </NavbarItem>
       <NavbarItem>
-        <Link color="foreground" href="#">
+        <Button as={Link} href="/register" className="bg-amber-700">
           Sign Up
-        </Link>
+        </Button>
       </NavbarItem>
     </NavbarContent>
   </Navbar>
