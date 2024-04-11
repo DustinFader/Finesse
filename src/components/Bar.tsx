@@ -10,6 +10,12 @@ const Bar = ({ data }) => {
       type: 'bar',
       data,
       options: {
+        plugins: {
+          legend: {
+             display: false,
+          }
+       },
+        maintainAspectRatio: false,
         indexAxis: "y",
         scales: {
           y: {
