@@ -21,15 +21,15 @@ export async function POST(request: Request) {
 
   const newPayment = await prisma.payments.create({
     data: {
-      user_id: 7,
-      category_name: body.get("category"),
+      user_id: 1,
+      category_id: 1,
       name: body.get("payment_name"),
       amount: amountInt,
       is_additive: additive_bool,
     }
   })
 
-  category.payment_id = newPayment.payment_id;
+  // category.payment_id = newPayment.payment_id;
 
   return NextResponse.json({message: "passing", body: body});
 }
