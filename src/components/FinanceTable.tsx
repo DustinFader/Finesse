@@ -19,42 +19,6 @@ import {
   Link,
 } from "@nextui-org/react";
 
-const rows = [
-  {
-    key: "1",
-    category: "rent",
-    payment: "rent",
-    amount: -950,
-  },
-  {
-    key: "2",
-    category: "rent",
-    payment: "rent",
-    amount: -950,
-  },
-  {
-    key: "3",
-    category: "rent",
-    payment: "rent",
-    amount: -950,
-  },
-];
-
-const columns = [
-  {
-    key: "category",
-    label: "Category",
-  },
-  {
-    key: "payment",
-    label: "Payment",
-  },
-  {
-    key: "amount",
-    label: "Amount",
-  },
-];
-
 export default function FinanceTable() {
   const [payments, setPayments] = useState<any[]>([]);
 
