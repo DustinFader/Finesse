@@ -9,6 +9,16 @@ const PieChart = ({ data }) => {
     let chartInstance = new Chart(ctx, {
       type: 'pie',
       data: data,
+      options: {
+        plugins: {
+           legend: {
+              position: "bottom",
+              labels: {
+                boxHeight: 50,
+              }
+           }
+        }
+      }
     });
   
     return () => {
