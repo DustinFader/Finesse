@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { PrismaClient } from '@prisma/client'
+
 import {
   Table,
   TableHeader,
@@ -6,7 +8,7 @@ import {
   TableRow,
   TableCell,
   TableColumn,
-  getKeyValue,
+  // getKeyValue,
   Input,
   Button,
   Modal,
@@ -21,12 +23,29 @@ import {
 
 export default function FinanceTable() {
   const [payments, setPayments] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     fetch("/api/payments")
       .then((res) => res.json())
       .then((data) => setPayments(data.allPayments));
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data) => setCategories(data.allCategories));
   }, []);
+
+  // useEffect(() => {
+  //   async function fetchPayments() {
+  //     const payments = await prisma.payments.findMany({
+  //       include: {
+  //         categories_payments_category_idTocategories: true // Include the category details
+  //       }
+  //     });
+  //     setPayments(payments);
+  //   }
+
+  //   fetchPayments();
+  // }, []);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -44,6 +63,14 @@ export default function FinanceTable() {
       label: "Amount",
     },
   ];
+
+  const getKeyValue = (item, key) => {
+    if (key === 'category_id') {
+      const category = categories.find(cat => cat.category_id === item.category_id);
+      return category ? category.name : ''; // Get the category name or empty string if not found
+    }
+    return item[key];
+  };
 
   return (
     <div>

@@ -19,10 +19,26 @@ export async function POST(request: Request) {
     additive_bool = false;
   }
 
+  const categoryName = body.get("category_name");
+
+  let category = await prisma.categories.findUnique({
+    where: {
+      name: categoryName,
+    },
+  });
+
+  if (!category) {
+    category = await prisma.categories.create({
+      data: {
+        name: categoryName,
+      },
+    });
+  }
+  
   const newPayment = await prisma.payments.create({
     data: {
       user_id: 1,
-      category_id: 1,
+      category_id: category.category_id,
       name: body.get("payment_name"),
       amount: amountInt,
       is_additive: additive_bool,
