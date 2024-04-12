@@ -12,11 +12,12 @@ export default function Login() {
           <form action="/api/users" method="POST" id="addUser">
             <Input name="email" type="email" id="email" label="Email" className="m-4" color="primary"/>
             <Input name="password" type="password" id="password" label="Password" className="m-4" color="primary"/>
+            <input type="hidden" name="formType" value="register" />
+            <Button type="submit" form="addUser" value="Submit" className="ml-4 bg-amber-700">
+              Register
+            </Button>
           </form>
 
-          <Button type="submit" form="addUser" value="Submit" className="ml-4 bg-amber-700">
-            Register
-          </Button>
         </div>
       </main>
     </div>
