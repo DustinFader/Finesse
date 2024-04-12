@@ -8,7 +8,6 @@ import {
   TableRow,
   TableCell,
   TableColumn,
-  // getKeyValue,
   Input,
   Button,
   Modal,
@@ -18,7 +17,7 @@ import {
   ModalFooter,
   useDisclosure,
   Checkbox,
-  Link,
+  Link
 } from "@nextui-org/react";
 
 export default function FinanceTable() {
@@ -81,10 +80,10 @@ export default function FinanceTable() {
 
   return (
     <div>
-      <Button onPress={onOpen} color="primary">
+      <Button onPress={onOpen} className="bg-amber-700">
         Add Payment
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center" className="bg-blue-800">
         <ModalContent>
           {(onClose) => (
             <>
@@ -98,22 +97,25 @@ export default function FinanceTable() {
                     label="Category"
                     name="category"
                     placeholder="Payment Category"
-                    variant="bordered"
+                    color="primary"
                   />
                   <Input
                     label="Name"
                     name="payment_name"
                     placeholder="Payment Name"
-                    variant="bordered"
+                    color="primary"
                   />
                   <Input
                     label="Amount"
                     name="amount"
                     placeholder="Payment Name"
-                    variant="bordered"
+                    color="primary"
                   />
                   <div className="flex py-2 px-1 justify-between">
-                    <Checkbox value="true" name="is_additive">
+                    <Checkbox
+                    value="true"
+                    name="is_additive"
+                    >
                       Additive
                     </Checkbox>
                   </div>
@@ -121,7 +123,7 @@ export default function FinanceTable() {
               </ModalBody>
               <ModalFooter>
                 <Button
-                  color="primary"
+                  className="bg-amber-700"
                   onPress={onClose}
                   type="submit"
                   form="addPayment"
@@ -133,7 +135,7 @@ export default function FinanceTable() {
           )}
         </ModalContent>
       </Modal>
-      <Table aria-label="Example table with dynamic content">
+      <Table aria-label="Example table with dynamic content" className="bg-red-300">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.key}>{column.label}</TableColumn>
