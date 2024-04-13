@@ -35,6 +35,40 @@ export default function FinanceTable() {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  function handleSubmitPayment(event) {
+    event.preventDefault();
+    //set payment/category?
+    const {amount, category, is_additive, payment_name} = event.target.elements;
+
+    const formData = {amount: amount.value, category: category.value, is_additive: is_additive.value, payment_name: payment_name.value}
+    console.log(formData);
+
+    fetch("/api/payments", {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: "POST",
+      body: JSON.stringify(formData),
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      setPayments(prev => [...prev, data.newPayment])
+      setCategories(prev => {
+        const categoryExists = prev.find((cat) => cat.id === data.newPayment.category_id)
+        if (!categoryExists) {
+          return [...prev, data.category]
+        }
+        return [...prev]
+      })
+      onOpenChange()
+    })
+  }
+
+  const handleClickDeletePayment = (pId) => {
+    console.log(`deleting, ${pId}`)
+  }
+
   const columns = [
     {
       key: "category_id",
@@ -48,6 +82,10 @@ export default function FinanceTable() {
       key: "amount",
       label: "Amount",
     },
+    {
+      key: "delete",
+      label: "Delete",
+    },
   ];
 
   const getKeyValue = (item, key) => {
@@ -58,29 +96,10 @@ export default function FinanceTable() {
     return item[key];
   };
 
-  // function handleSubmit(event, onClose) {
-  //   event.preventDefault();
-  //   const form = event.target;
-  //   const formData = new FormData(form);
-    
-  //   fetch('/api/payments', {
-  //     method: 'POST',
-  //     body: formData,
-  //   })
-  //   .then((res) => res.json())
-  //   .then((data) => setPayments(data.allPayments))
-  //   .then(response => {
-  //     console.log('Form submitted successfully');
-  //     onClose(); // Close the modal after successful submission
-  //   })
-  //   .catch(error => {
-  //     console.error('Error submitting form:', error);
-  //   });
-  // }
 
   return (
     <div>
-      <Button onPress={onOpen} className="bg-amber-700">
+      <Button onPress={onOpen} className="bg-amber-700 mb-4">
         Add Payment
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center" className="bg-blue-800">
@@ -90,8 +109,8 @@ export default function FinanceTable() {
               <ModalHeader className="flex flex-col gap-1">
                 New Payment
               </ModalHeader>
+              <form onSubmit={handleSubmitPayment}>
               <ModalBody>
-                <form id="addPayment" method="POST" action={'/api/payments'}>
                   <Input
                     autoFocus
                     label="Category"
@@ -119,34 +138,35 @@ export default function FinanceTable() {
                       Additive
                     </Checkbox>
                   </div>
-                </form>
               </ModalBody>
               <ModalFooter>
                 <Button
-                  className="bg-amber-700"
-                  onPress={onClose}
-                  type="submit"
-                  form="addPayment"
-                >
-                  Add
-                </Button>
+                    className="bg-amber-700"
+                    type="submit"
+                  >
+                    Add
+                  </Button>
               </ModalFooter>
+              </form>
             </>
           )}
         </ModalContent>
       </Modal>
-      <Table aria-label="Example table with dynamic content" className="bg-red-300">
+      <Table aria-label="Example table with dynamic content" classNames={{wrapper: "bg-blue-800"
+      }}>
         <TableHeader columns={columns}>
           {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
+            <TableColumn key={column.key} className="bg-blue-700">{column.label}</TableColumn>
           )}
         </TableHeader>
         <TableBody items={payments}>
           {(item) => (
             <TableRow key={item.payment_id}>
-              {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-              )}
+              {(columnKey) => {
+                return columnKey !== "delete"
+                ? <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                : <TableCell><Button onClick={() => handleClickDeletePayment(item.payment_id)} className="bg-amber-700">Delete</Button></TableCell>
+              }}
             </TableRow>
           )}
         </TableBody>
