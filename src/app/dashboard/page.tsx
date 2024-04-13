@@ -1,14 +1,15 @@
 'use client'
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/Header"
 import FinanceTable from "@/components/FinanceTable"
 import Footer from "@/components/Footer"
 import PieChart from "@/components/PieChart"
 import Bar from "@/components/Bar"
-import { PositiveTotal, NegativeTotal } from "./helpers";
 
 export default function Dashboard() {
+  const [payments, setPayments] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
 
   const chartSampleData = {
     labels: ['Red', 'Blue', 'Yellow'],
@@ -26,14 +27,22 @@ export default function Dashboard() {
     ],
   };
   
-  const barSampleData = {
+  const total = (additive) => {
+    return payments.reduce((total, current) =>
+      total + (current?.is_additive === additive ? current.amount : 0), 0
+    )
+  }
+  
+  console.log(payments[0]?.is_additive, "true")
+
+  const barData = {
     labels: ['Money'],
     datasets: [
       {
         barThickness: 80,
         label: "Income",
         data: [
-          {x: [0, PositiveTotal()], y: 'Money'}
+          {x: [0, total(true)], y: 'Money'}
         ],
         backgroundColor: [
           '#55C572',
@@ -43,7 +52,9 @@ export default function Dashboard() {
       {
         barThickness: 80,
         label: "Expenses",
-        data: [NegativeTotal()],
+        data: [{
+          x: [-total(false), 0], y: 'Money'
+        }],
         backgroundColor: [
           '#C70039',
         ],
@@ -52,6 +63,7 @@ export default function Dashboard() {
     ],
   };
 
+
   return (
     <div className="dark:bg-blue-900 flex flex-col min-h-screen">
       <Header/>
@@ -59,15 +71,15 @@ export default function Dashboard() {
         <div className="flex flex-col w-3/4">
           <div className="flex m-10 justify-between items-center bg-blue-800 rounded-lg">
             <div className="w-1/2">
-              <Bar data={barSampleData}/>
+              <Bar data={barData}/>
             </div>
             <div className="text-xl m-10">
-              <p><b>Income:</b> {PositiveTotal()}</p>
-              <p><b>Expenses:</b> {NegativeTotal()}</p>
+              <p><b>Income:</b> {total(true)}</p>
+              <p><b>Expenses:</b> {total(false)}</p>
             </div>
             </div>
             <div className="m-10">
-              <FinanceTable />
+              <FinanceTable payments={payments} categories={categories} setCategories={setCategories} setPayments={setPayments} />
             </div>
         </div>
         <div className="w-1/4 bg-blue-800 flex flex-col items-center">

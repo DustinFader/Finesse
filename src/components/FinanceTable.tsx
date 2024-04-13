@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { PrismaClient } from '@prisma/client'
+import React, { useEffect } from "react";
 
 import {
   Table,
@@ -20,9 +19,7 @@ import {
   Link
 } from "@nextui-org/react";
 
-export default function FinanceTable() {
-  const [payments, setPayments] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
+export default function FinanceTable({ payments, categories, setCategories, setPayments }) {
 
   useEffect(() => {
     fetch("/api/payments")
@@ -96,6 +93,7 @@ export default function FinanceTable() {
     return item[key];
   };
 
+  console.log(payments)
 
   return (
     <div>
