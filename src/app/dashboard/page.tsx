@@ -1,11 +1,12 @@
 'use client'
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "@/components/Header"
 import FinanceTable from "@/components/FinanceTable"
 import Footer from "@/components/Footer"
 import PieChart from "@/components/PieChart"
 import Bar from "@/components/Bar"
+
 
 const chartSampleData = {
   labels: ['Red', 'Blue', 'Yellow'],
@@ -52,6 +53,17 @@ const barSampleData = {
 };
 
 export default function Dashboard() {
+  const [payments, setPayments] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch("/api/payments")
+      .then((res) => res.json())
+      .then((data) => setPayments(data.allPayments));
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data) => setCategories(data.allCategories));
+  }, []);
 
   return (
     <div className="dark:bg-blue-900 flex flex-col min-h-screen">
@@ -68,7 +80,7 @@ export default function Dashboard() {
             </div>
             </div>
             <div className="m-10">
-              <FinanceTable />
+              <FinanceTable categories={categories} setCategories={setCategories} payments={payments} setPayments={setPayments} />
             </div>
         </div>
         <div className="w-1/4 bg-blue-800 flex flex-col items-center">

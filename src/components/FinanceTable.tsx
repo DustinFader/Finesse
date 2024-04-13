@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { PrismaClient } from '@prisma/client'
 
 import {
@@ -20,18 +20,7 @@ import {
   Link
 } from "@nextui-org/react";
 
-export default function FinanceTable() {
-  const [payments, setPayments] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
-
-  useEffect(() => {
-    fetch("/api/payments")
-      .then((res) => res.json())
-      .then((data) => setPayments(data.allPayments));
-    fetch("/api/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data.allCategories));
-  }, []);
+export default function FinanceTable({payments, setPayments, categories, setCategories}) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
