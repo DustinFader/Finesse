@@ -6,52 +6,51 @@ import FinanceTable from "@/components/FinanceTable"
 import Footer from "@/components/Footer"
 import PieChart from "@/components/PieChart"
 import Bar from "@/components/Bar"
-
-const chartSampleData = {
-  labels: ['Red', 'Blue', 'Yellow'],
-  datasets: [
-    {  
-      data: [12, 19, 3], // Example data
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.7)',
-        'rgba(54, 162, 235, 0.7)',
-        'rgba(255, 206, 86, 0.7)',
-      ],
-      borderWidth: 1,
-      
-    },
-  ],
-};
-
-const income = 200;
-const expense = -950;
-const barSampleData = {
-  labels: ['Money'],
-  datasets: [
-    {
-      barThickness: 80,
-      label: "Income",
-      data: [
-        {x: [0, income], y: 'Money'}
-      ],
-      backgroundColor: [
-        '#55C572',
-      ],
-      borderWidth: 1,
-    },
-    {
-      barThickness: 80,
-      label: "Expenses",
-      data: [expense],
-      backgroundColor: [
-        '#C70039',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
+import { PositiveTotal, NegativeTotal } from "./helpers";
 
 export default function Dashboard() {
+
+  const chartSampleData = {
+    labels: ['Red', 'Blue', 'Yellow'],
+    datasets: [
+      {  
+        data: [12, 19, 3], // Example data
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.7)',
+          'rgba(54, 162, 235, 0.7)',
+          'rgba(255, 206, 86, 0.7)',
+        ],
+        borderWidth: 1,
+        
+      },
+    ],
+  };
+  
+  const barSampleData = {
+    labels: ['Money'],
+    datasets: [
+      {
+        barThickness: 80,
+        label: "Income",
+        data: [
+          {x: [0, PositiveTotal()], y: 'Money'}
+        ],
+        backgroundColor: [
+          '#55C572',
+        ],
+        borderWidth: 1,
+      },
+      {
+        barThickness: 80,
+        label: "Expenses",
+        data: [NegativeTotal()],
+        backgroundColor: [
+          '#C70039',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
   return (
     <div className="dark:bg-blue-900 flex flex-col min-h-screen">
@@ -63,8 +62,8 @@ export default function Dashboard() {
               <Bar data={barSampleData}/>
             </div>
             <div className="text-xl m-10">
-              <p><b>Income:</b> {income}</p>
-              <p><b>Expenses:</b> {expense}</p>
+              <p><b>Income:</b> {PositiveTotal()}</p>
+              <p><b>Expenses:</b> {NegativeTotal()}</p>
             </div>
             </div>
             <div className="m-10">
