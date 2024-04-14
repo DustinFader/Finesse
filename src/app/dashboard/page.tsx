@@ -11,15 +11,24 @@ export default function Dashboard() {
   const [payments, setPayments] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
 
+  console.log(categories)
+  console.log(payments)
+  const categoriesTotal = []
+  // the complexity bothers me but i did it.
+  for(let c = 0; c < categories.length; c++) {
+    const categoryTotal = payments.reduce((total, current) => total + (current.category_id === categories[c].category_id ? 1 : 0), 0);
+    if (!categoryTotal) continue;
+    console.log(categoryTotal) 
+    categoriesTotal.push({categoryTotal, name: categories[c].name})
+  }
+  console.log(categoriesTotal)
   const chartSampleData = {
-    labels: ['Red', 'Blue', 'Yellow'],
+    labels: [...categoriesTotal.map(cat => cat.name)],
     datasets: [
       {  
-        data: [12, 19, 3], // Example data
+        data: [...categoriesTotal.map(cat => cat.categoryTotal)],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.7)',
-          'rgba(54, 162, 235, 0.7)',
-          'rgba(255, 206, 86, 0.7)',
+          ...categoriesTotal.map(e => `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, ${Math.random()})`)
         ],
         borderWidth: 1,
         
