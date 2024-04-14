@@ -24,34 +24,6 @@ const chartSampleData = {
   ],
 };
 
-const income = 200;
-const expense = -950;
-const barSampleData = {
-  labels: ['Money'],
-  datasets: [
-    {
-      barThickness: 80,
-      label: "Income",
-      data: [
-        {x: [0, income], y: 'Money'}
-      ],
-      backgroundColor: [
-        '#55C572',
-      ],
-      borderWidth: 1,
-    },
-    {
-      barThickness: 80,
-      label: "Expenses",
-      data: [expense],
-      backgroundColor: [
-        '#C70039',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
-
 export default function Dashboard() {
   const [payments, setPayments] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
@@ -65,6 +37,24 @@ export default function Dashboard() {
       .then((data) => setCategories(data.allCategories));
   }, []);
 
+  const income = payments.reduce((accumulator, payment) => {
+    if(payment.is_additive === true) {
+      return accumulator += payment.amount;
+    } else {
+      return accumulator;
+    }
+  }, 0);
+
+  const expense = payments.reduce((accumulator, payment) => {
+    if (payment.is_additive === false) {
+      return accumulator += payment.amount;
+    } else {
+      return accumulator;
+    }
+  }, 0)
+
+  console.log(expense)
+
   return (
     <div className="dark:bg-blue-900 flex flex-col min-h-screen">
       <Header/>
@@ -72,7 +62,7 @@ export default function Dashboard() {
         <div className="flex flex-col w-3/4">
           <div className="flex m-10 justify-between items-center bg-blue-800 rounded-lg">
             <div className="w-1/2">
-              <Bar data={barSampleData}/>
+              <Bar income={income} expense={expense} categories={categories}/>
             </div>
             <div className="text-xl m-10">
               <p><b>Income:</b> {income}</p>
@@ -84,17 +74,12 @@ export default function Dashboard() {
             </div>
         </div>
         <div className="w-1/4 bg-blue-800 flex flex-col items-center">
+          <h2 className="mt-4 text-xl font-semibold">Expense Categories</h2>
           <div className="m-10">
-          <PieChart data={chartSampleData}/>
+            <PieChart data={chartSampleData}/>
           </div>
-          <ul className="flex flex-col items-center mt-10 text-xl">
-            <li>Coffee</li>
-            <li>Tea</li>
-            <li>Milk</li>
-          </ul>
         </div>
       </main>
-      {/* <Footer/> */}
     </div>
   );
 }
