@@ -11,23 +11,26 @@ export default function Dashboard() {
   const [payments, setPayments] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
 
-  const categoriesTotal = []
-  // the complexity bothers me but i did it. This gives back [{categoryTotal: number, name: 'name of category'}...]
-  for(let c = 0; c < categories.length; c++) {
-    const categoryTotal = payments.reduce((total, current) => total + (current.category_id === categories[c].category_id ? 1 : 0), 0);
-    // doesnt count the ones that have zero payments to them.
-    if (!categoryTotal) continue;
-    categoriesTotal.push({categoryTotal, name: categories[c].name})
+  function categoriesTotal() {
+    const catTotal = []
+    // the complexity bothers me but i did it. This gives back [{categoryTotal: number, name: 'name of category'}...]
+    for(let c = 0; c < categories.length; c++) {
+      const categoryTotal = payments.reduce((total, current) => total + (current.category_id === categories[c].category_id ? 1 : 0), 0);
+      // doesnt count the ones that have zero payments to them.
+      if (!categoryTotal) continue;
+      catTotal.push({categoryTotal, name: categories[c].name})
+    }
+    return catTotal;
   }
 
-  const chartSampleData = {
-    labels: [...categoriesTotal.map(cat => cat.name)],
+  const chartData = {
+    labels: [...categoriesTotal().map(cat => cat.name)],
     datasets: [
       {  
-        data: [...categoriesTotal.map(cat => cat.categoryTotal)],
+        data: [...categoriesTotal().map(cat => cat.categoryTotal)],
         backgroundColor: [
           // randomized rgba based on the amount of categories
-          ...categoriesTotal.map(e => `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, ${Math.random()})`)
+          ...categoriesTotal().map(e => `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, ${Math.random()})`)
         ],
         borderWidth: 1,
         
@@ -90,7 +93,7 @@ export default function Dashboard() {
         </div>
         <div className="w-1/4 bg-blue-800 flex flex-col items-center">
           <div className="m-10">
-          <PieChart data={chartSampleData}/>
+          <PieChart data={chartData}/>
           </div>
           <ul className="flex flex-col items-center mt-10 text-xl">
             <li>Coffee</li>
