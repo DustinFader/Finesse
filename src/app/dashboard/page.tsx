@@ -11,23 +11,22 @@ export default function Dashboard() {
   const [payments, setPayments] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
 
-  console.log(categories)
-  console.log(payments)
   const categoriesTotal = []
-  // the complexity bothers me but i did it.
+  // the complexity bothers me but i did it. This gives back [{categoryTotal: number, name: 'name of category'}...]
   for(let c = 0; c < categories.length; c++) {
     const categoryTotal = payments.reduce((total, current) => total + (current.category_id === categories[c].category_id ? 1 : 0), 0);
+    // doesnt count the ones that have zero payments to them.
     if (!categoryTotal) continue;
-    console.log(categoryTotal) 
     categoriesTotal.push({categoryTotal, name: categories[c].name})
   }
-  console.log(categoriesTotal)
+
   const chartSampleData = {
     labels: [...categoriesTotal.map(cat => cat.name)],
     datasets: [
       {  
         data: [...categoriesTotal.map(cat => cat.categoryTotal)],
         backgroundColor: [
+          // randomized rgba based on the amount of categories
           ...categoriesTotal.map(e => `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, ${Math.random()})`)
         ],
         borderWidth: 1,
