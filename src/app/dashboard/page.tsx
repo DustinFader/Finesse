@@ -15,8 +15,9 @@ export default function Dashboard() {
     const catTotal = []
     // the complexity bothers me but i did it. This gives back [{categoryTotal: number, name: 'name of category'}...]
     for(let c = 0; c < categories.length; c++) {
-      const categoryTotal = payments.reduce((total, current) => total + (current.category_id === categories[c].category_id ? 1 : 0), 0);
+      const categoryTotal = payments.reduce((total, current) => total + (current.category_id === categories[c].category_id && !current.is_additive ? current.amount : 0), 0);
       // doesnt count the ones that have zero payments to them.
+      console.log(categoryTotal)
       if (!categoryTotal) continue;
       catTotal.push({categoryTotal, name: categories[c].name})
     }
