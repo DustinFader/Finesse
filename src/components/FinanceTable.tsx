@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { PrismaClient } from '@prisma/client'
 
 import {
@@ -23,6 +23,15 @@ import {
 export default function FinanceTable({payments, setPayments, categories, setCategories}) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [ checkboxValue, setCheckboxValue ] = useState(false);
+
+  const handleCheckbox = function() {
+    if (checkboxValue === false) {
+      setCheckboxValue(true)
+    } else {
+      setCheckboxValue(false)
+    }
+  };
 
   function handleSubmitPayment(event) {
     event.preventDefault();
@@ -41,7 +50,6 @@ export default function FinanceTable({payments, setPayments, categories, setCate
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       setPayments(prev => [...prev, data.newPayment])
       setCategories(prev => {
         const categoryExists = prev.find((cat) => cat.id === data.newPayment.category_id)
@@ -88,7 +96,7 @@ export default function FinanceTable({payments, setPayments, categories, setCate
 
   return (
     <div>
-      <Button onPress={onOpen} className="bg-amber-700 mb-4">
+      <Button onPress={onOpen} className="bg-amber-600 mb-4">
         Add Payment
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center" className="bg-blue-800">
@@ -121,8 +129,9 @@ export default function FinanceTable({payments, setPayments, categories, setCate
                   />
                   <div className="flex py-2 px-1 justify-between">
                     <Checkbox
-                    value="true"
                     name="is_additive"
+                    value={checkboxValue}
+                    onChange={() => handleCheckbox()}
                     >
                       Additive
                     </Checkbox>
@@ -154,7 +163,7 @@ export default function FinanceTable({payments, setPayments, categories, setCate
               {(columnKey) => {
                 return columnKey !== "delete"
                 ? <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-                : <TableCell><Button onClick={() => handleClickDeletePayment(item.payment_id)} className="bg-amber-700">Delete</Button></TableCell>
+                : <TableCell><Button onClick={() => handleClickDeletePayment(item.payment_id)} className="bg-amber-600">Delete</Button></TableCell>
               }}
             </TableRow>
           )}
