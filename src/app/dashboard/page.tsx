@@ -41,8 +41,6 @@ export default function Dashboard() {
     )
   }
   
-  console.log(payments[0]?.is_additive, "true")
-
   const barData = {
     labels: ['Money'],
     datasets: [

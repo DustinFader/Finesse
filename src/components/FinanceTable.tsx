@@ -93,8 +93,6 @@ export default function FinanceTable({ payments, categories, setCategories, setP
     return item[key];
   };
 
-  console.log(payments)
-
   return (
     <div>
       <Button onPress={onOpen} className="bg-amber-700 mb-4">
