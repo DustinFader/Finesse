@@ -1,8 +1,34 @@
 import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const Bar = ({ data }) => {
+const Bar = ({income, expense, categories}) => {
   const barRef = useRef(null);
+
+  const data = {
+    labels: ['Money'],
+    datasets: [
+      {
+        barThickness: 80,
+        label: "Income",
+        data: [
+          {x: [0, income], y: 'Money'}
+        ],
+        backgroundColor: [
+          '#55C572',
+        ],
+        borderWidth: 1,
+      },
+      {
+        barThickness: 80,
+        label: "Expenses",
+        data: [expense],
+        backgroundColor: [
+          '#C70039',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
   useEffect(() => {
     const ctx = barRef.current.getContext('2d');
