@@ -7,28 +7,28 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const body = await request.formData();
-  let additive_bool = null;
-  let amountInt = parseInt(body.get("amount"));
+  const {amount, category, is_additive, payment_name} = await request.json();
 
-  if (body.get("is_additive")) {
-    additive_bool = true;
-  } else {
-    additive_bool = false;
-  }
+  let amountInt = parseInt(amount);
 
-  const categoryName = body.get("category");
+  // if (body.get("is_additive")) {
+  //   additive_bool = true;
+  // } else {
+  //   additive_bool = false;
+  // }
 
-  let category = await prisma.categories.findFirst({
+  // const categoryName = body.get("category");
+
+  let categoryObj = await prisma.categories.findFirst({
     where: {
-      name: categoryName,
+      name: category,
     },
   });
 
-  if (!category) {
-    category = await prisma.categories.create({
+  if (!categoryObj) {
+    categoryObj = await prisma.categories.create({
       data: {
-        name: categoryName,
+        name: category,
       },
     });
   }
@@ -36,14 +36,14 @@ export async function POST(request: Request) {
   const newPayment = await prisma.payments.create({
     data: {
       user_id: 1,
-      category_id: category.category_id,
-      name: body.get("payment_name"),
+      category_id: categoryObj.category_id,
+      name: payment_name,
       amount: amountInt,
-      is_additive: additive_bool,
+      is_additive: is_additive === "true" ? true : false,
     }
   })
 
-  return NextResponse.json({message: "passing", body: body});
+  return NextResponse.json({message: "passing", newPayment, category: categoryObj});
 }
 
 export async function DELETE(request: Request) {}
