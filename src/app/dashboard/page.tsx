@@ -17,9 +17,8 @@ export default function Dashboard() {
     for(let c = 0; c < categories.length; c++) {
       const categoryTotal = payments.reduce((total, current) => total + (current.category_id === categories[c].category_id && !current.is_additive ? current.amount : 0), 0);
       // doesnt count the ones that have zero payments to them.
-      console.log(categoryTotal)
       if (!categoryTotal) continue;
-      catTotal.push({categoryTotal, name: categories[c].name})
+      catTotal.push({categoryTotal, name: categories[c].name, color: `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`})
     }
     return catTotal;
   }
@@ -31,10 +30,9 @@ export default function Dashboard() {
         data: [...categoriesTotal().map(cat => cat.categoryTotal)],
         backgroundColor: [
           // randomized rgba based on the amount of categories
-          ...categoriesTotal().map(e => `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, ${Math.random()})`)
+          ...categoriesTotal().map(cat => '#d946ef')
         ],
         borderWidth: 1,
-        
       },
     ],
   };
@@ -95,11 +93,13 @@ export default function Dashboard() {
         <div className="w-1/4 bg-blue-800 flex flex-col items-center">
           <div className="m-10">
           <PieChart data={chartData}/>
+          <div className="legend">
+            <ul className="flex flex-col items-center mt-10 text-xl gap-4">
+              {...categoriesTotal().map(cat => <li key={cat.name} className='flex flex-row gap-4' >{cat.color}<div style={{ backgroundColor: '#d946ef' }} className={`box`}/>{cat.name}</li>)}
+            </ul>
           </div>
-          <ul className="flex flex-col items-center mt-10 text-xl">
-            <li>Coffee</li>
-            <li>Tea</li>
-            <li>Milk</li>
+          </div>
+          <ul >
           </ul>
         </div>
       </main>
