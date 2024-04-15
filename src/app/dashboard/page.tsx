@@ -37,7 +37,7 @@ export default function Dashboard() {
     ],
   };
   
-  const total = (additive) => {
+  const total = (additive: boolean) => {
     return payments.reduce((total, current) =>
       total + (current?.is_additive === additive ? current.amount : 0), 0
     )
