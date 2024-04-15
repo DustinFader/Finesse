@@ -1,18 +1,23 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "@/components/Header"
 import FinanceTable from "@/components/FinanceTable"
-import Footer from "@/components/Footer"
 import PieChart from "@/components/PieChart"
 import Bar from "@/components/Bar"
+
+interface categoriesTotalInterface {
+  categoryTotal: Number;
+  name: String;
+  color: any;
+}
 
 export default function Dashboard() {
   const [payments, setPayments] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
 
-  function categoriesTotal() {
-    const catTotal = []
+  function categoriesTotal(): categoriesTotalInterface[] {
+    const catTotal = [];
     // the complexity bothers me but i did it. This gives back [{categoryTotal: number, name: 'name of category'}...]
     for(let c = 0; c < categories.length; c++) {
       const categoryTotal = payments.reduce((total, current) => total + (current.category_id === categories[c].category_id && !current.is_additive ? current.amount : 0), 0);
@@ -20,17 +25,23 @@ export default function Dashboard() {
       if (!categoryTotal) continue;
       catTotal.push({categoryTotal, name: categories[c].name, color: `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`})
     }
+    console.log(catTotal)
     return catTotal;
   }
 
+  const catTotals = categoriesTotal()
+
   const chartData = {
-    labels: [...categoriesTotal().map(cat => cat.name)],
+    labels: [...catTotals.map(cat => cat.name)],
     datasets: [
       {  
-        data: [...categoriesTotal().map(cat => cat.categoryTotal)],
+        data: [...catTotals.map(cat => cat.categoryTotal)],
         backgroundColor: [
           // randomized rgba based on the amount of categories
-          ...categoriesTotal().map(cat => '#d946ef')
+          ...catTotals.map(cat => {
+          console.log(cat.color);
+          return cat.color;
+        })
         ],
         borderWidth: 1,
       },
@@ -95,7 +106,7 @@ export default function Dashboard() {
           <PieChart data={chartData}/>
           <div className="legend">
             <ul className="flex flex-col items-center mt-10 text-xl gap-4">
-              {...categoriesTotal().map(cat => <li key={cat.name} className='flex flex-row gap-4' >{cat.color}<div style={{ backgroundColor: '#d946ef' }} className={`box`}/>{cat.name}</li>)}
+              {...catTotals.map(cat => <li key={cat.name} className='flex flex-row gap-4' >{cat.color}<div style={{ backgroundColor: cat.color }} className={`box`}/>{cat.name}</li>)}
             </ul>
           </div>
           </div>

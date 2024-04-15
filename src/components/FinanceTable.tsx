@@ -38,7 +38,6 @@ export default function FinanceTable({ payments, categories, setCategories, setP
     const {amount, category, is_additive, payment_name} = event.target.elements;
 
     const formData = {amount: amount.value, category: category.value, is_additive: is_additive.value, payment_name: payment_name.value}
-    console.log(formData);
 
     fetch("/api/payments", {
       headers: {
@@ -49,7 +48,6 @@ export default function FinanceTable({ payments, categories, setCategories, setP
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       setPayments(prev => [...prev, data.newPayment])
       setCategories(prev => {
         const categoryExists = prev.find((cat) => cat.id === data.newPayment.category_id)
