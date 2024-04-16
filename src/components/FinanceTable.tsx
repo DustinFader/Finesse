@@ -17,7 +17,6 @@ import {
   ModalFooter,
   useDisclosure,
   Checkbox,
-  Link
 } from "@nextui-org/react";
 
 export default function FinanceTable({payments, setPayments, categories, setCategories}) {
@@ -31,7 +30,6 @@ export default function FinanceTable({payments, setPayments, categories, setCate
     const {amount, category, is_additive, payment_name} = event.target.elements;
 
     const formData = {amount: amount.value, category: category.value, is_additive: is_additive.value, payment_name: payment_name.value}
-    console.log(formData);
 
     fetch("/api/payments", {
       headers: {
@@ -96,7 +94,6 @@ export default function FinanceTable({payments, setPayments, categories, setCate
     }
     return item[key];
   };
-
 
   return (
     <div>

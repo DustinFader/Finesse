@@ -12,10 +12,7 @@ const PieChart = ({ data }) => {
       options: {
         plugins: {
            legend: {
-              position: "bottom",
-              labels: {
-                boxHeight: 50,
-              }
+              display: false
            }
         }
       }
