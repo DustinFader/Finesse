@@ -14,7 +14,7 @@ export default function Login() {
             <Input name="password" type="password" id="password" label="Password" className="m-4" color="primary"/>
           </form>
 
-          <Button type="submit" form="getUser" value="Submit" className="ml-4 bg-amber-700">
+          <Button type="submit" form="addUser" value="Submit" className="ml-4 bg-amber-700">
             Login
           </Button>
         </div>
