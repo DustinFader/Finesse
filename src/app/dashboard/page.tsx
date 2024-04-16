@@ -82,7 +82,6 @@ export default function Dashboard() {
     ],
   };
 
-
   return (
     <div className="dark:bg-blue-900 flex flex-col min-h-screen">
       <Header/>
@@ -106,7 +105,7 @@ export default function Dashboard() {
           <PieChart data={chartData}/>
           <div className="legend">
             <ul className="flex flex-col items-center mt-10 text-xl gap-4">
-              {...catTotals.map(cat => <li key={cat.name} className='flex flex-row gap-4' >{cat.color}<div style={{ backgroundColor: cat.color }} className={`box`}/>{cat.name}</li>)}
+              {...catTotals.map(cat => <li key={cat.name} className='flex flex-row gap-4' ><div style={{ backgroundColor: cat.color }} className={`box`}/>{cat.name}</li>)}
             </ul>
           </div>
           </div>
