@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { PrismaClient } from '@prisma/client'
+import React, { useEffect } from "react";
 
 import {
   Table,
@@ -20,9 +19,7 @@ import {
   Link
 } from "@nextui-org/react";
 
-export default function FinanceTable() {
-  const [payments, setPayments] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
+export default function FinanceTable({ payments, categories, setCategories, setPayments }) {
 
   useEffect(() => {
     fetch("/api/payments")
@@ -41,7 +38,6 @@ export default function FinanceTable() {
     const {amount, category, is_additive, payment_name} = event.target.elements;
 
     const formData = {amount: amount.value, category: category.value, is_additive: is_additive.value, payment_name: payment_name.value}
-    console.log(formData);
 
     fetch("/api/payments", {
       headers: {
@@ -52,7 +48,6 @@ export default function FinanceTable() {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       setPayments(prev => [...prev, data.newPayment])
       setCategories(prev => {
         const categoryExists = prev.find((cat) => cat.id === data.newPayment.category_id)
@@ -95,7 +90,6 @@ export default function FinanceTable() {
     }
     return item[key];
   };
-
 
   return (
     <div>

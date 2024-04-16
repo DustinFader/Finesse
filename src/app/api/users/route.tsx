@@ -19,8 +19,6 @@ export async function DELETE(request: Request) {
   const body = await request.formData();
   const email = body.get("email");
 
-  console.log("being called")
-
   const user = await prisma.users.deleteMany({
     where: {
       email: email,
@@ -33,6 +31,5 @@ export async function DELETE(request: Request) {
     },
   })
 
-  console.log(showUsers)
   return NextResponse.redirect(new URL('/', request.url))
 }
