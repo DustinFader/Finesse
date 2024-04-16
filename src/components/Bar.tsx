@@ -1,40 +1,40 @@
 import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const Bar = ({income, expense, categories}) => {
+const Bar = ({totalAmount, categories}) => {
   const barRef = useRef(null);
-
-  const data = {
-    labels: ['Money'],
-    datasets: [
-      {
-        barThickness: 80,
-        label: "Income",
-        data: [
-          {x: [0, income], y: 'Money'}
-        ],
-        backgroundColor: [
-          '#55C572',
-        ],
-        borderWidth: 1,
-      },
-      {
-        barThickness: 80,
-        label: "Expenses",
-        data: [expense],
-        backgroundColor: [
-          '#C70039',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
 
   useEffect(() => {
     const ctx = barRef.current.getContext('2d');
     let barInstance = new Chart(ctx, {
       type: 'bar',
-      data,
+      data: {
+        labels: ['Money'],
+        datasets: [
+          {
+            barThickness: 80,
+            label: "Income",
+            data: [
+              {x: [0, totalAmount(true)], y: 'Money'}
+            ],
+            backgroundColor: [
+              '#55C572',
+            ],
+            borderWidth: 1,
+          },
+          {
+            barThickness: 80,
+            label: "Expenses",
+            data: [{
+              x: [-totalAmount(false), 0], y: 'Money'
+            }],
+            backgroundColor: [
+              '#C70039',
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
       options: {
         plugins: {
           legend: {
@@ -55,7 +55,7 @@ const Bar = ({income, expense, categories}) => {
     return () => {
       barInstance.destroy();
     };
-  }, [data]);
+  }, [totalAmount]);
 
   return (
     <div>

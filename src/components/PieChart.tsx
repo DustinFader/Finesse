@@ -1,14 +1,29 @@
 import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const PieChart = ({ data }) => {
+const PieChart = ({ catTotals }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
     let chartInstance = new Chart(ctx, {
       type: 'pie',
-      data: data,
+      data: {
+        labels: [...catTotals.map(cat => cat.name)],
+        datasets: [
+          {  
+            data: [...catTotals.map(cat => cat.categoryTotal)],
+            backgroundColor: [
+              // randomized rgba based on the amount of categories
+              ...catTotals.map(cat => {
+              console.log(cat.color);
+              return cat.color;
+            })
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
       options: {
         plugins: {
            legend: {
@@ -21,7 +36,7 @@ const PieChart = ({ data }) => {
     return () => {
       chartInstance.destroy();
     };
-  }, [data]);
+  }, [catTotals]);
 
   return (
     <div>
