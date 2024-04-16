@@ -11,14 +11,6 @@ export async function POST(request: Request) {
 
   let amountInt = parseInt(amount);
 
-  // if (body.get("is_additive")) {
-  //   additive_bool = true;
-  // } else {
-  //   additive_bool = false;
-  // }
-
-  // const categoryName = body.get("category");
-
   let categoryObj = await prisma.categories.findFirst({
     where: {
       name: category,

@@ -16,7 +16,6 @@ import {
   ModalFooter,
   useDisclosure,
   Checkbox,
-  Link
 } from "@nextui-org/react";
 
 export default function FinanceTable({ payments, categories, setCategories, setPayments }) {
