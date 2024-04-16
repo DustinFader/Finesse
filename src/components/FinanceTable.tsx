@@ -25,14 +25,6 @@ export default function FinanceTable({payments, setPayments, categories, setCate
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [ checkboxValue, setCheckboxValue ] = useState(false);
 
-  const handleCheckbox = function() {
-    if (checkboxValue === false) {
-      setCheckboxValue(true)
-    } else {
-      setCheckboxValue(false)
-    }
-  };
-
   function handleSubmitPayment(event) {
     event.preventDefault();
     //set payment/category?
@@ -64,6 +56,18 @@ export default function FinanceTable({payments, setPayments, categories, setCate
 
   const handleClickDeletePayment = (pId) => {
     console.log(`deleting, ${pId}`)
+
+    const data = {id: pId, message: "present!"}
+
+    fetch("/api/payments", {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: "DELETE",
+      body: JSON.stringify(data),
+    })
+    .then((res) => res.json())
+    .then((data) => setPayments(payments.filter((payment) => payment.payment_id !== pId)))
   }
 
   const columns = [
@@ -131,10 +135,12 @@ export default function FinanceTable({payments, setPayments, categories, setCate
                     <Checkbox
                     name="is_additive"
                     value={checkboxValue}
-                    onChange={() => handleCheckbox()}
+                    isSelected={checkboxValue}
+                    onValueChange={setCheckboxValue}
                     >
                       Additive
                     </Checkbox>
+                    <p>Selected: {checkboxValue ? "true" : "false"}</p>
                   </div>
               </ModalBody>
               <ModalFooter>
