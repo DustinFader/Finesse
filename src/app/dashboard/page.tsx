@@ -52,8 +52,7 @@ export default function Dashboard() {
       return accumulator;
     }
   }, 0)
-
-  console.log(expense)
+  
 
   return (
     <div className="dark:bg-blue-900 flex flex-col min-h-screen">
