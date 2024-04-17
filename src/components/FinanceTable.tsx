@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, {useState} from "react";
+import { PrismaClient } from '@prisma/client'
 
 import {
   Table,
@@ -18,18 +19,10 @@ import {
   Checkbox,
 } from "@nextui-org/react";
 
-export default function FinanceTable({ payments, categories, setCategories, setPayments }) {
-
-  useEffect(() => {
-    fetch("/api/payments")
-      .then((res) => res.json())
-      .then((data) => setPayments(data.allPayments));
-    fetch("/api/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data.allCategories));
-  }, []);
+export default function FinanceTable({payments, setPayments, categories, setCategories}) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [ checkboxValue, setCheckboxValue ] = useState(false);
 
   function handleSubmitPayment(event) {
     event.preventDefault();
@@ -49,7 +42,7 @@ export default function FinanceTable({ payments, categories, setCategories, setP
     .then((data) => {
       setPayments(prev => [...prev, data.newPayment])
       setCategories(prev => {
-        const categoryExists = prev.find((cat) => cat.id === data.newPayment.category_id)
+        const categoryExists = prev.find((cat) => cat.category_id === data.newPayment.category_id)
         if (!categoryExists) {
           return [...prev, data.category]
         }
@@ -61,6 +54,18 @@ export default function FinanceTable({ payments, categories, setCategories, setP
 
   const handleClickDeletePayment = (pId) => {
     console.log(`deleting, ${pId}`)
+
+    const data = {id: pId, message: "present!"}
+
+    fetch("/api/payments", {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: "DELETE",
+      body: JSON.stringify(data),
+    })
+    .then((res) => res.json())
+    .then((data) => setPayments(payments.filter((payment) => payment.payment_id !== pId)))
   }
 
   const columns = [
@@ -97,7 +102,7 @@ export default function FinanceTable({ payments, categories, setCategories, setP
 
   return (
     <div>
-      <Button onPress={onOpen} className="bg-amber-700 mb-4">
+      <Button onPress={onOpen} className="bg-amber-600 mb-4">
         Add Payment
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center" className="bg-blue-800">
@@ -130,11 +135,14 @@ export default function FinanceTable({ payments, categories, setCategories, setP
                   />
                   <div className="flex py-2 px-1 justify-between">
                     <Checkbox
-                    value="true"
                     name="is_additive"
+                    value={checkboxValue}
+                    isSelected={checkboxValue}
+                    onValueChange={setCheckboxValue}
                     >
                       Additive
                     </Checkbox>
+                    <p>Selected: {checkboxValue ? "true" : "false"}</p>
                   </div>
               </ModalBody>
               <ModalFooter>
@@ -162,8 +170,8 @@ export default function FinanceTable({ payments, categories, setCategories, setP
             <TableRow key={payment.payment_id}>
               {(columnKey) => {
                 return columnKey !== "delete"
-                ? <TableCell>{getKeyValue(payment, columnKey)}</TableCell>
-                : <TableCell><Button onClick={() => handleClickDeletePayment(payment.payment_id)} className="bg-amber-700">Delete</Button></TableCell>
+                ? <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                : <TableCell><Button onClick={() => handleClickDeletePayment(item.payment_id)} className="bg-amber-600">Delete</Button></TableCell>
               }}
             </TableRow>
           )}

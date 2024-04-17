@@ -2,16 +2,21 @@
   "name": "finesse",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.10",
     "@prisma/client": "^5.12.1",
     "chart.js": "^4.4.2",
+    "cookie-parser": "^1.4.6",
     "framer-motion": "^11.0.24",
     "next": "14.1.4",
     "prisma": "^5.12.1",
