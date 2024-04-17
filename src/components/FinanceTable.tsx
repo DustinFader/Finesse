@@ -170,7 +170,7 @@ export default function FinanceTable({payments, setPayments, categories, setCate
             <TableRow key={payment.payment_id}>
               {(columnKey) => {
                 return columnKey !== "delete"
-                ? <TableCell>{getKeyValue(payment, columnKey)}</TableCell>
+                ? <TableCell className={payment.is_additive ? "" : "bg-red-900"}>{getKeyValue(payment, columnKey)}</TableCell>
                 : <TableCell><Button onClick={() => handleClickDeletePayment(payment.payment_id)} className="bg-amber-600">Delete</Button></TableCell>
               }}
             </TableRow>
