@@ -8,7 +8,6 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const {amount, category, is_additive, payment_name} = await request.json();
-
   let amountInt = parseInt(amount);
 
   let categoryObj = await prisma.categories.findFirst({
@@ -38,4 +37,15 @@ export async function POST(request: Request) {
   return NextResponse.json({message: "passing", newPayment, category: categoryObj});
 }
 
-export async function DELETE(request: Request) {}
+export async function DELETE(request: Request) {
+  const data = await request.json();
+  console.log(data)
+
+  const removedPayment = await prisma.payments.delete({
+    where: {
+      payment_id: data.id
+    }
+  })
+
+  return NextResponse.json({message: "removed!", removedPayment})
+}
