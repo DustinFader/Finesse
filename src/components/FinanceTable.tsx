@@ -42,7 +42,7 @@ export default function FinanceTable({payments, setPayments, categories, setCate
     .then((data) => {
       setPayments(prev => [...prev, data.newPayment])
       setCategories(prev => {
-        const categoryExists = prev.find((cat) => cat.id === data.newPayment.category_id)
+        const categoryExists = prev.find((cat) => cat.category_id === data.newPayment.category_id)
         if (!categoryExists) {
           return [...prev, data.category]
         }
