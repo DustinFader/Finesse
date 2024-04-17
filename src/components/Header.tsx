@@ -8,7 +8,7 @@ import {
   Button,
 } from "@nextui-org/react";
 
-const user = false
+const user = "billiam"
 
 export default function Header() {
   return ( 
