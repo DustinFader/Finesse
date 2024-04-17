@@ -27,18 +27,24 @@ export default function Dashboard() {
   }, []);
 
   function categoriesTotal(): categoriesTotalInterface[] {
-    const catTotal = [];
+    // const catTotal: { categoryTotal: any; name: any; color: any; }[] = [];
+    const catTotal: any[] = [];
     // the complexity bothers me but i did it. This gives back [{categoryTotal: number, name: 'name of category'}...]
     for(let c = 0; c < categories.length; c++) {
+      // loops through the payments checking if negative and adds the ones with the same category
       const categoryTotal = payments.reduce((total, current) => total + (current.category_id === categories[c].category_id && !current.is_additive ? current.amount : 0), 0);
       // doesnt count the ones that have zero payments to them.
       if (!categoryTotal) continue;
-      catTotal.push({categoryTotal, name: categories[c].name, color: `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`})
+
+      const isExist = catTotal.find(cat=> cat.name === categories[c].name);
+
+      if(!isExist) {
+        catTotal.push({categoryTotal, name: categories[c].name, color: `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`})
+      }
     }
-    console.log(catTotal)
     return catTotal;
   }
-
+  
   const catTotals = categoriesTotal()
   
   // returns the total amount of either income(true) or expences(false)

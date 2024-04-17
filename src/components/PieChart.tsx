@@ -16,7 +16,6 @@ const PieChart = ({ catTotals }) => {
             backgroundColor: [
               // randomized rgba based on the amount of categories
               ...catTotals.map(cat => {
-              console.log(cat.color);
               return cat.color;
             })
             ],
