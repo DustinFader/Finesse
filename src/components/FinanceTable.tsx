@@ -87,12 +87,17 @@ export default function FinanceTable({payments, setPayments, categories, setCate
     },
   ];
 
-  const getKeyValue = (item, key) => {
+  // the key is for the value in payment and runs the code for it else returns the payment value alone
+  const getKeyValue = (payment, key) => {
     if (key === 'category_id') {
-      const category = categories.find(cat => cat.category_id === item.category_id);
+      const category = categories.find(cat => cat.category_id === payment.category_id);
       return category ? category.name : ''; // Get the category name or empty string if not found
     }
-    return item[key];
+
+    if (key === 'amount') {
+      return payment.is_additive ? payment.amount : -payment.amount;
+    }
+    return payment[key];
   };
 
   return (
@@ -161,12 +166,12 @@ export default function FinanceTable({payments, setPayments, categories, setCate
           )}
         </TableHeader>
         <TableBody items={payments}>
-          {(item) => (
-            <TableRow key={item.payment_id}>
+          {(payment) => (
+            <TableRow key={payment.payment_id}>
               {(columnKey) => {
                 return columnKey !== "delete"
-                ? <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-                : <TableCell><Button onClick={() => handleClickDeletePayment(item.payment_id)} className="bg-amber-600">Delete</Button></TableCell>
+                ? <TableCell className={payment.is_additive ? "" : "bg-red-900"}>{getKeyValue(payment, columnKey)}</TableCell>
+                : <TableCell><Button onClick={() => handleClickDeletePayment(payment.payment_id)} className="bg-amber-600">Delete</Button></TableCell>
               }}
             </TableRow>
           )}
