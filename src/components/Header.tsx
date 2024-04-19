@@ -13,9 +13,6 @@ import {
 
 
 export default function Header( {user}) {
-
-  
-
   const router = useRouter()
 
   const handleClickLogout = () => {
