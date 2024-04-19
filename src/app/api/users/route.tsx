@@ -12,7 +12,6 @@ export async function POST(request: Request) {
     }
   })
 
-  console.log(loggedInUser);
   const responseBody = {
     ...loggedInUser,
     password: null,
