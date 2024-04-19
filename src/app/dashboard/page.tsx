@@ -5,6 +5,7 @@ import Header from "@/components/Header"
 import FinanceTable from "@/components/FinanceTable"
 import PieChart from "@/components/PieChart"
 import Bar from "@/components/Bar"
+import { redirect } from "next/navigation";
 
 interface categoriesTotalInterface {
   categoryTotal: Number;
@@ -15,6 +16,7 @@ interface categoriesTotalInterface {
 export default function Dashboard() {
   const [payments, setPayments] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(JSON.parse(localStorage.getItem("user")))
 
 
   useEffect(() => {
@@ -54,9 +56,14 @@ export default function Dashboard() {
     )
   }
 
+  if (!user) {
+    // router.push("/login")
+    redirect("/login")
+  }
+
   return (
     <div className="dark:bg-blue-900 flex flex-col min-h-screen">
-      <Header/>
+      <Header user={user}/>
       <main className="flex justify-between flex-grow">
         <div className="flex flex-col w-3/4">
           <div className="flex m-10 justify-between items-center bg-blue-800 rounded-lg">
