@@ -18,16 +18,16 @@ export default function Dashboard() {
   const [categories, setCategories] = useState<any[]>([]);
   const [user, setUser] = useState<any>(JSON.parse(localStorage.getItem("user")))
 
-
   useEffect(() => {
     fetch("/api/payments")
-      .then((res) => res.json())
-      .then((data) => setPayments(data.allPayments));
+    .then((res) => res.json())
+    .then((data) => {
+      setPayments(data.allPayments)
+      });
     fetch("/api/categories")
       .then((res) => res.json())
       .then((data) => setCategories(data.allCategories));
   }, []);
-
   function categoriesTotal(): categoriesTotalInterface[] {
     // const catTotal: { categoryTotal: any; name: any; color: any; }[] = [];
     const catTotal: any[] = [];
@@ -57,7 +57,6 @@ export default function Dashboard() {
   }
 
   if (!user) {
-    // router.push("/login")
     redirect("/login")
   }
 

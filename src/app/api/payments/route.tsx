@@ -39,6 +39,7 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   const data = await request.json();
+  console.log("##1 data [be] ", data)
   const removedPayment = await prisma.payments.delete({
     where: {
       payment_id: data.id
