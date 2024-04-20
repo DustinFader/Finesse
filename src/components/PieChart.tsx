@@ -20,6 +20,7 @@ const PieChart = ({ catTotals }) => {
             })
             ],
             borderWidth: 1,
+            borderColor: 'black',
           },
         ],
       },
