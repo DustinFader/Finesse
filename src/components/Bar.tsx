@@ -17,10 +17,9 @@ const Bar = ({totalAmount, categories}) => {
             data: [
               {x: [0, totalAmount(true)], y: 'Money'}
             ],
-            backgroundColor: [
-              '#55C572',
-            ],
+            backgroundColor: ['#68F081'],
             borderWidth: 1,
+            borderColor: 'black',
           },
           {
             barThickness: 80,
@@ -28,10 +27,9 @@ const Bar = ({totalAmount, categories}) => {
             data: [{
               x: [-totalAmount(false), 0], y: 'Money'
             }],
-            backgroundColor: [
-              '#C70039',
-            ],
+            backgroundColor: ['#E33651'],
             borderWidth: 1,
+            borderColor: 'black'
           },
         ],
       },
