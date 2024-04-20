@@ -34,6 +34,6 @@ body {
 
 .box {
   width: 50px; /* Set the width */
-  height: 60px; /* Set the height */
-  border: 1px solid black; /* Border on all sides */
+  height: 50px; /* Set the height */
+  border: 2px solid black; /* Border on all sides */
 }
