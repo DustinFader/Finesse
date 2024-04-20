@@ -79,13 +79,13 @@ export default function Dashboard() {
               <FinanceTable categories={categories} setCategories={setCategories} payments={payments} setPayments={setPayments} />
             </div>
         </div>
-        <div className="w-1/4 bg-blue-800 flex flex-col items-center">
-          <h2 className="mt-4 text-xl font-semibold">Expense Categories</h2>
+        <div className="flex flex-column w-1/4 bg-blue-800 flex flex-col items-center">
+          <h2 className=" mt-4 text-xl font-semibold">Expense Categories</h2>
           <div className="m-10">
             <PieChart catTotals={catTotals}/>
-            <div className="legend">
-              <ul className="flex flex-col items-center mt-10 text-xl gap-4">
-                {...catTotals.map(cat => <li key={cat.name} className='flex flex-row gap-4' ><div style={{ backgroundColor: cat.color }} className={`box`}/>{cat.name}</li>)}
+            <div className="legend flex flex-column justify-center">
+              <ul className="mt-10 mr-10 text-xl">
+                {...catTotals.map(cat => <li key={cat.name} className='flex flex-row justify-center items-center m-5' ><div style={{ backgroundColor: cat.color }} className={`box mr-4`}/>{cat.name}</li>)}
               </ul>
             </div>
           </div>
