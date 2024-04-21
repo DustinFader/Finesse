@@ -18,6 +18,8 @@ const config: Config = {
     },
   },
   darkmode: "class",
-  plugins: [nextui()],
+  plugins: [nextui({
+    addCommonColors: true,
+  })],
 };
 export default config;
