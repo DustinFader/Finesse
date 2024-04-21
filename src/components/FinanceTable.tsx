@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import { PrismaClient } from '@prisma/client'
 
 import {
   Table,
@@ -53,19 +52,22 @@ export default function FinanceTable({payments, setPayments, categories, setCate
   }
 
   const handleClickDeletePayment = (pId) => {
-    console.log(`deleting, ${pId}`)
-
     const data = {id: pId, message: "present!"}
-
-    fetch("/api/payments", {
+      fetch("/api/payments", {
       headers: {
         'Content-Type': 'application/json',
       },
       method: "DELETE",
       body: JSON.stringify(data),
     })
-    .then((res) => res.json())
-    .then((data) => setPayments(payments.filter((payment) => payment.payment_id !== pId)))
+    .then(() => {
+      fetch("/api/payments")
+      .then((res) => res.json())
+      .then((data) => {
+      setPayments(data.allPayments)
+      });
+    })
+    .catch((error) => console.log(error))
   }
 
   const columns = [

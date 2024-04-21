@@ -18,16 +18,16 @@ export default function Dashboard() {
   const [categories, setCategories] = useState<any[]>([]);
   const [user, setUser] = useState<any>(JSON.parse(localStorage.getItem("user")))
 
-
   useEffect(() => {
     fetch("/api/payments")
-      .then((res) => res.json())
-      .then((data) => setPayments(data.allPayments));
+    .then((res) => res.json())
+    .then((data) => {
+      setPayments(data.allPayments)
+      });
     fetch("/api/categories")
       .then((res) => res.json())
       .then((data) => setCategories(data.allCategories));
   }, []);
-
   function categoriesTotal(): categoriesTotalInterface[] {
     const catTotal: any[] = [];
     // the complexity bothers me but i did it. This gives back [{categoryTotal: number, name: 'name of category'}...]
