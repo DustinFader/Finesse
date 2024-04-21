@@ -29,7 +29,6 @@ export default function Dashboard() {
   }, []);
 
   function categoriesTotal(): categoriesTotalInterface[] {
-    // const catTotal: { categoryTotal: any; name: any; color: any; }[] = [];
     const catTotal: any[] = [];
     // the complexity bothers me but i did it. This gives back [{categoryTotal: number, name: 'name of category'}...]
     for(let c = 0; c < categories.length; c++) {
@@ -57,12 +56,11 @@ export default function Dashboard() {
   }
 
   if (!user) {
-    // router.push("/login")
     redirect("/login")
   }
 
   return (
-    <div className="dark:bg-blue-900 flex flex-col min-h-screen">
+    <main className="dark:bg-blue-900 flex flex-col min-h-screen">
       <Header user={user}/>
       <main className="flex justify-between flex-grow">
         <div className="flex flex-col w-3/4">
@@ -80,17 +78,19 @@ export default function Dashboard() {
             </div>
         </div>
         <div className="flex flex-column w-1/4 bg-blue-800 flex flex-col items-center">
-          <h2 className=" mt-4 text-xl font-semibold">Expense Categories</h2>
+          <div className="m-5 p-4 bg-blue-700 rounded-lg">
+            <h2 className="text-2xl font-semibold">Expense Categories</h2>
+          </div>
           <div className="m-10">
             <PieChart catTotals={catTotals}/>
             <div className="legend flex flex-column justify-center">
               <ul className="mt-10 mr-10 text-xl">
-                {...catTotals.map(cat => <li key={cat.name} className='flex flex-row justify-center items-center m-5' ><div style={{ backgroundColor: cat.color }} className={`box mr-4`}/>{cat.name}</li>)}
+                {...catTotals.map(cat => <li key={cat.name} className='flex flex-row justify-start items-center m-5' ><div style={{ backgroundColor: cat.color }} className={`box mr-4`}/>{cat.name}</li>)}
               </ul>
             </div>
           </div>
         </div>
       </main>
-    </div>
+    </main>
   );
 }
