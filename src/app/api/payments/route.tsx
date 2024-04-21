@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma'
 
 export async function GET(request: Request) {
   const allPayments = await prisma.payments.findMany()
-  return NextResponse.json({ message: 'Hello!', allPayments }, { status: 200 })
+  return NextResponse.json({ allPayments }, { status: 200 })
 }
 
 export async function POST(request: Request) {
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     }
   })
 
-  return NextResponse.json({message: "passing", newPayment, category: categoryObj});
+  return NextResponse.json({ newPayment, category: categoryObj}, { status: 200 });
 }
 
 export async function DELETE(request: Request) {
@@ -45,5 +45,5 @@ export async function DELETE(request: Request) {
     }
   })
 
-  return NextResponse.json({message: "removed!", removedPayment})
+  return NextResponse.json({ removedPayment}, { status: 200 })
 }
