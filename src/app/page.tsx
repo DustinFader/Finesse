@@ -1,7 +1,18 @@
+'use client'
+
+import { useState } from "react";
+import { redirect } from "next/navigation";
 import Header from "@/components/Header";
 import { Button, Link } from "@nextui-org/react";
 
+
 export default function Home() {
+  const [user, setUser] = useState<any>(JSON.parse(localStorage.getItem("user")))
+
+  if (user) {
+    redirect("/dashboard")
+  }
+
   return (
     <main className="dark:bg-blue-900 flex flex-col min-h-screen">
       <Header />

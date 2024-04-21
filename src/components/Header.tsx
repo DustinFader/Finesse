@@ -22,7 +22,7 @@ export default function Header( {user}) {
 
   return ( 
   <Navbar position="static" className="bg-yellow-500" maxWidth="full">
-    <NavbarBrand className="justify-start"><Link href="/dashboard" className="font-bold text-3xl text-white">Finesse</Link></NavbarBrand>
+    <NavbarBrand className="justify-start"><Link href="/" className="font-bold text-3xl text-white">Finesse</Link></NavbarBrand>
     <NavbarContent justify="end">
       {user
         ?
