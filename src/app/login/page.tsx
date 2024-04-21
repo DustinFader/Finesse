@@ -15,6 +15,7 @@ export default function Login() {
       email: email.value,
       password: password.value,
     }
+    //currently functioning as registration for presentation purposes
     fetch("/api/users", {
       method: "POST",
       headers: {
